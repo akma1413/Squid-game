@@ -2,15 +2,16 @@
 
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form';
+import { FormData } from '@/types/form'; // FormData 타입 임포트 경로 변경
 
 interface InputProps {
   label: string;
-  name: string;
+  name: keyof FormData;
   type: 'text' | 'email' | 'tel';
   placeholder?: string;
   required?: boolean;
   error?: string;
-  register: UseFormRegister<any>; // Use UseFormRegister type
+  register: UseFormRegister<FormData>; // UseFormRegister에 FormData 타입 지정
   className?: string;
 }
 
