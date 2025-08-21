@@ -7,6 +7,7 @@ import { z } from 'zod';
 import Button from './Button';
 import { COPY } from '@/content/copy';
 import { formSchema, FormData } from '@/types/form';
+import { submitApplication } from '@/utils/supabase';
 
 export default function ApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,10 +28,19 @@ export default function ApplicationForm() {
     setSubmitError('');
     
     try {
-      // TODO: Supabase 연동
-      console.log('Form data:', data);
-      setSubmitSuccess(true);
-      reset();
+      // Supabase에 지원자 데이터 저장
+      const result = await submitApplication({
+        name: data.name,
+        email: data.email,
+        phone: data.phone
+      });
+
+      if (result.success) {
+        setSubmitSuccess(true);
+        reset();
+      } else {
+        throw new Error('지원서 제출에 실패했습니다.');
+      }
     } catch (error: unknown) {
       setSubmitError(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
     } finally {

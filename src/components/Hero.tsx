@@ -19,7 +19,7 @@ export default function Hero() {
         </p>
         
         {/* Slogan */}
-        <p className="mt-2 text-base md:text-lg text-amber-300/80 mb-8">
+        <p className="mt-2 text-xl md:text-3xl font-bold text-amber-300/80 mb-8">
           {COPY.hero.slogan}
         </p>
         
