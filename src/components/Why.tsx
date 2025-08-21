@@ -14,20 +14,32 @@ export default function Why() {
           <p className="text-lg md:text-xl text-neutral-300 max-w-3xl mx-auto mb-10">
             {COPY.why.sub}
           </p>
-          <div className="space-y-3">
-            {COPY.why.body.map((line, index) => (
-              <p key={index} className="text-lg md:text-xl text-neutral-300">
-                {line}
-              </p>
-            ))}
-          </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {COPY.why.bullets.map((item, index) => (
-            <div key={index} className="bg-[#1A1A1A] p-6 rounded-lg border border-[#D6B25E]/20">
-              <div className="text-[#D6B25E] text-2xl mb-3" aria-hidden="true">✓</div>
-              <p className="text-lg md:text-xl text-white font-medium">{item}</p>
+        {/* 새로운 구조화된 레이아웃 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {COPY.why.body.map((item, index) => (
+            <div key={index} className="bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] p-8 rounded-2xl border border-[#D6B25E]/20 hover:border-[#D6B25E]/40 transition-all duration-300 group">
+              <div className="text-center">
+                {/* 아이콘 또는 번호 */}
+                <div className="w-16 h-16 bg-gradient-to-br from-[#D6B25E] to-[#B8941F] rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl font-bold text-black">
+                    {index + 1}
+                  </span>
+                </div>
+                
+                {/* 텍스트 내용 */}
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-4 leading-relaxed">
+                  {item}
+                </h3>
+                
+                {/* 추가 설명 (선택사항) */}
+                <p className="text-neutral-400 text-sm md:text-base">
+                  {index === 0 && "실제 경험을 바탕으로 한 전략과 노하우"}
+                  {index === 1 && "엘리트 교육과 업계 경험을 겸비한 참가자"}
+                  {index === 2 && "게임에 대한 깊은 이해와 열정을 가진 참가자"}
+                </p>
+              </div>
             </div>
           ))}
         </div>

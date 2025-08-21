@@ -9,17 +9,17 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B0B0C] overflow-hidden">
       <div className="relative z-10 text-center px-4 max-w-screen-lg mx-auto">
         {/* Main Headline */}
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight break-words px-4">
           {COPY.hero.headline}
         </h1>
         
         {/* Subtitle */}
-        <p className="mt-5 text-2xl md:text-3xl text-neutral-300 mb-6 max-w-3xl mx-auto">
+        <p className="mt-5 text-xl md:text-3xl text-neutral-300 mb-6 max-w-3xl mx-auto break-words px-4">
           {COPY.hero.sub}
         </p>
         
         {/* Slogan */}
-        <p className="mt-2 text-xl md:text-3xl font-bold text-amber-300/80 mb-8">
+        <p className="mt-2 text-lg md:text-3xl font-bold text-amber-300/80 mb-8 break-words px-4">
           {COPY.hero.slogan}
         </p>
         
