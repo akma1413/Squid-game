@@ -1,0 +1,491 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+```markdown
+# Code Guidelines: Street-Smart Survival Game Landing Page
+
+## 1. Project Overview
+
+This document outlines the coding standards for the "Prove You’re Street Smart" landing page. The project utilizes Next.js for the frontend, Supabase for the backend, and TailwindCSS for styling. The primary goal is to create a high-performance, accessible, and visually appealing landing page to gather leads for the event.
+
+Key architectural decisions include Server-Side Rendering (SSR) and Static Site Generation (SSG) with Next.js, a BaaS approach with Supabase, and a utility-first CSS methodology using TailwindCSS.
+
+## 2. Core Principles
+
+*   **Maintainability:** Code should be easy to understand, modify, and debug.
+*   **Performance:** Prioritize fast loading times and efficient rendering.
+*   **Readability:** Code should be clear, concise, and well-documented.
+*   **Testability:** Code should be structured to facilitate unit and integration testing.
+*   **Scalability:** The architecture should accommodate future growth and feature additions.
+
+## 3. Language-Specific Guidelines
+
+### 3.1. JavaScript (Next.js)
+
+*   **File Organization and Directory Structure:** Adhere to the Domain-Driven Organization Strategy as defined in the TRD.
+*   **Import/Dependency Management:** Use absolute imports for components and utilities within the `src` directory (e.g., `import Button from 'components/Button';`). Utilize `npm` or `yarn` for managing dependencies.  Specify exact versions in `package.json` to ensure consistent builds.
+*   **Error Handling Patterns:** Use `try...catch` blocks for handling potential errors in API calls and data processing. Implement error logging with descriptive messages. Consider using a centralized error handling utility.
+
+### 3.2. CSS (TailwindCSS)
+
+*   **File Organization and Directory Structure:** Use Tailwind's utility classes directly in the JSX. Custom CSS (if needed) should be placed in separate modules and imported.
+*   **Class Naming Conventions:** Follow Tailwind's naming conventions for utility classes. Use custom class names sparingly and only when necessary to extend Tailwind's functionality.
+*   **Responsiveness:** Utilize Tailwind's responsive modifiers (e.g., `md:`, `lg:`) to create responsive designs.
+
+### 3.3. Supabase (Backend)
+
+*   **API Interaction:** Use the Supabase JavaScript client library for interacting with the Supabase API.
+*   **Data Modeling:** Define clear and consistent data models for storing event registration information (email, phone number, etc.).
+*   **Security:** Implement row-level security (RLS) policies in Supabase to protect data from unauthorized access.
+
+## 4. Code Style Rules
+
+### 4.1. MUST Follow:
+
+*   **Naming Conventions:**
+    *   **Variables:** Use camelCase for variable names (e.g., `firstName`, `userEmail`).
+    *   **Functions:** Use camelCase for function names (e.g., `handleSubmit`, `fetchData`).
+    *   **Components:** Use PascalCase for component names (e.g., `HeroSection`, `ApplicationForm`).
+    *   **Files:** Use PascalCase for component files (e.g., `HeroSection.js`) and camelCase for utility files (e.g., `api.js`).
+    *   **Rationale:** Consistent naming improves code readability and maintainability.
+
+*   **Component Structure:**
+    *   Components MUST be functional components using React Hooks.
+    *   Components MUST be small and focused on a single responsibility.
+    *   Components MUST receive data via props.
+    *   Rationale: Functional components with Hooks are easier to test and reason about.
+
+*   **Data Fetching:**
+    *   Data fetching MUST be done using `useEffect` hook for component-specific data.
+    *   Centralize API calls in a dedicated `utils/api.js` file.
+    *   Implement loading states to provide feedback to the user during data fetching.
+    *   Rationale: Centralized API calls improve code organization and reusability.
+
+*   **Form Handling:**
+    *   Use `react-hook-form` for form management and validation.
+    *   Define clear validation rules for each form field.
+    *   Provide clear error messages to the user for invalid form inputs.
+    *   Rationale: `react-hook-form` simplifies form handling and validation.
+
+*   **Error Handling:**
+    *   Wrap API calls in `try...catch` blocks to handle potential errors.
+    *   Log errors to the console or a logging service.
+    *   Display user-friendly error messages to the user.
+    *   Rationale: Proper error handling prevents unexpected crashes and improves the user experience.
+
+*   **TailwindCSS Usage:**
+    *   Utilize Tailwind's utility classes for styling.
+    *   Avoid writing custom CSS unless absolutely necessary.
+    *   Use Tailwind's responsive modifiers for creating responsive designs.
+    *   Rationale: TailwindCSS provides a consistent and maintainable styling approach.
+
+*   **Accessibility:**
+    *   Use semantic HTML elements.
+    *   Provide alternative text for images.
+    *   Ensure sufficient color contrast.
+    *   Make the website keyboard navigable.
+    *   Rationale: Accessibility ensures that the website is usable by everyone.
+
+*   **Code Comments:**
+    *   Add comments to explain complex logic or non-obvious code.
+    *   Document component props and function parameters.
+    *   Rationale: Comments improve code readability and maintainability.
+
+### 4.2. MUST NOT Do:
+
+*   **Direct DOM Manipulation:**  Do not directly manipulate the DOM using `document.getElementById` or similar methods. Use React's virtual DOM instead.
+    *   Rationale: Direct DOM manipulation can lead to performance issues and inconsistencies.
+
+*   **Inline Styles:**  Avoid using inline styles. Use TailwindCSS classes instead.
+    *   Rationale: Inline styles are difficult to maintain and override.
+
+*   **Global Variables:**  Do not use global variables. Use React's state management or context API instead.
+    *   Rationale: Global variables can lead to naming conflicts and unexpected behavior.
+
+*   **Complex State Logic in Components:** Avoid implementing complex state logic directly within components. Consider using a state management library like Zustand if necessary.
+    *   Rationale: Keeping components focused on rendering improves testability and maintainability.
+
+*   **Ignoring Accessibility:**  Do not ignore accessibility guidelines.
+    *   Rationale: Accessibility is essential for creating inclusive websites.
+
+*   **Unnecessary Re-renders:**  Avoid causing unnecessary re-renders by carefully managing component dependencies and using `React.memo` when appropriate.
+    *   Rationale: Unnecessary re-renders can negatively impact performance.
+
+*   **Committing commented out code:** Never commit commented out code.
+
+## 5. Architecture Patterns
+
+### 5.1. Component/Module Structure Guidelines
+
+*   **Domain-Driven Design:** Organize components based on the landing page sections (Hero, Concept, Prize, Form).
+*   **Layered Architecture:** Separate UI components, API calls, and data processing logic.
+*   **Feature-Based Modules:** Group related components, styles, and logic into feature folders.
+*   **Shared Components:** Create reusable UI components (Button, Input, etc.) in a `components` directory.
+
+### 5.2. Data Flow Patterns
+
+*   **Unidirectional Data Flow:** Data flows from parent components to child components via props.
+*   **API Requests:** API requests are made from components using the centralized `api.js` utility.
+*   **State Updates:** State updates are triggered by user interactions or API responses.
+
+### 5.3. State Management Conventions
+
+*   **Local State:** Use `useState` for component-specific state.
+*   **Global State (if needed):** Use React's Context API or Zustand for managing global state. Choose Zustand for simplicity and performance if Context API becomes cumbersome.
+*   **State Immutability:** Treat state as immutable and use the spread operator (`...`) to create new state objects.
+
+### 5.4. API Design Standards
+
+*   **RESTful API:** Follow RESTful API principles for interacting with the Supabase backend.
+*   **JSON Format:** Use JSON for request and response bodies.
+*   **Error Handling:** Handle API errors gracefully and provide informative error messages.
+
+## Example Code Snippets
+
+```javascript
+// MUST: Example of a functional component with React Hooks
+// Explanation: This is the preferred way to define components in this project.
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { supabase } from 'utils/supabaseClient';
+
+function ApplicationForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('registrations')
+        .insert([data]);
+
+      if (error) throw error;
+
+      alert('Registration successful!');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="email">Email:</label>
+      <input type="email" id="email" {...register("email", { required: true })} />
+      {errors.email && <span>This field is required</span>}
+
+      <label htmlFor="phone">Phone:</label>
+      <input type="tel" id="phone" {...register("phone", { required: true })} />
+      {errors.phone && <span>This field is required</span>}
+
+      <button type="submit" disabled={loading}>
+        {loading ? 'Submitting...' : 'Submit'}
+      </button>
+    </form>
+  );
+}
+
+export default ApplicationForm;
+```
+
+```javascript
+// MUST NOT: Example of direct DOM manipulation
+// Explanation: This is not the React way of updating the UI.
+// Instead, use React's state management.
+
+function BadComponent() {
+  const handleClick = () => {
+    document.getElementById('myElement').textContent = 'Updated Text!';
+  };
+
+  return (
+    <div>
+      <p id="myElement">Initial Text</p>
+      <button onClick={handleClick}>Update Text</button>
+    </div>
+  );
+}
+
+// CORRECT WAY:
+function GoodComponent() {
+  const [text, setText] = useState('Initial Text');
+
+  const handleClick = () => {
+    setText('Updated Text!');
+  };
+
+  return (
+    <div>
+      <p>{text}</p>
+      <button onClick={handleClick}>Update Text</button>
+    </div>
+  );
+}
+```
+
+```javascript
+// MUST: Example of API call using useEffect in a component
+// Explanation: Using useEffect for side effects like API calls ensures proper component lifecycle management.
+
+import React, { useState, useEffect } from 'react';
+import { supabase } from 'utils/supabaseClient';
+
+function PrizeSection() {
+  const [prizeData, setPrizeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchPrizeData() {
+      try {
+        const { data, error } = await supabase
+          .from('prizes')
+          .select('*')
+          .limit(1);
+
+        if (error) throw error;
+
+        setPrizeData(data[0]); // Assuming only one prize entry
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    }
+
+    fetchPrizeData();
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  if (loading) {
+    return <p>Loading prize information...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  return (
+    <div>
+      {prizeData && (
+        <>
+          <h2>{prizeData.title}</h2>
+          <p>{prizeData.description}</p>
+          <p>Value: {prizeData.value}</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default PrizeSection;
+```
+
+```javascript
+// MUST NOT: Example of unnecessary re-renders caused by incorrect dependency array in useEffect
+// Explanation: Incorrect dependency arrays can cause useEffect to run unnecessarily, leading to performance issues.
+
+import React, { useState, useEffect } from 'react';
+
+function IncorrectDependencyComponent({ userId }) {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // This useEffect will run every time the component re-renders, even if userId hasn't changed.
+    // This is because the dependency array is missing userId.
+    async function fetchUserData() {
+      const response = await fetch(`/api/users/${userId}`);
+      const data = await response.json();
+      setUserData(data);
+    }
+
+    fetchUserData();
+  }, []); // Incorrect: Empty dependency array
+
+  return (
+    <div>
+      {userData ? <p>User: {userData.name}</p> : <p>Loading...</p>}
+    </div>
+  );
+}
+
+// CORRECT WAY:
+function CorrectDependencyComponent({ userId }) {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // This useEffect will only run when the component mounts or when userId changes.
+    async function fetchUserData() {
+      const response = await fetch(`/api/users/${userId}`);
+      const data = await response.json();
+      setUserData(data);
+    }
+
+    fetchUserData();
+  }, [userId]); // Correct: userId is included in the dependency array
+
+  return (
+    <div>
+      {userData ? <p>User: {userData.name}</p> : <p>Loading...</p>}
+    </div>
+  );
+}
+```
+
+```tailwind
+// MUST: Example of using TailwindCSS utility classes for responsive design
+// Explanation: This demonstrates how to use responsive prefixes to apply different styles at different screen sizes.
+
+<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded md:py-3 md:px-6 lg:text-lg">
+  Click me
+</button>
+
+//Explanation:
+//bg-blue-500: Sets the background color to blue on smaller screens.
+//hover:bg-blue-700: Changes the background color on hover.
+//text-white: Sets the text color to white.
+//font-bold: Makes the text bold.
+//py-2 px-4: Adds padding.
+//rounded: Rounds the corners.
+//md:py-3 md:px-6: Increases padding on medium screens and up.
+//lg:text-lg: Increases text size on large screens and up.
+```
+```javascript
+// MUST: Example of using a centralized API client (utils/api.js)
+// Explanation: This promotes code reuse and maintainability by centralizing API logic.
+
+// utils/api.js
+import { supabase } from './supabaseClient'; // Import your Supabase client
+
+export const getRegistrations = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('registrations')
+      .select('*');
+
+    if (error) {
+      console.error('Error fetching registrations:', error);
+      throw error; // Re-throw the error to be caught by the caller
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error in getRegistrations:', error);
+    throw error; // Re-throw the error to be caught by the caller
+  }
+};
+
+export const createRegistration = async (registrationData) => {
+    try {
+      const { data, error } = await supabase
+        .from('registrations')
+        .insert([registrationData]);
+
+      if (error) {
+        console.error('Error creating registration:', error);
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error in createRegistration:', error);
+      throw error;
+    }
+  };
+
+
+// In your component:
+import { getRegistrations, createRegistration } from 'utils/api';
+
+function SomeComponent() {
+  const [registrations, setRegistrations] = useState([]);
+
+  useEffect(() => {
+    async function loadRegistrations() {
+      try {
+        const data = await getRegistrations();
+        setRegistrations(data);
+      } catch (error) {
+        console.error('Failed to load registrations:', error);
+        // Handle the error appropriately (e.g., display an error message to the user)
+      }
+    }
+
+    loadRegistrations();
+  }, []);
+
+  const handleRegistrationSubmit = async (data) => {
+    try {
+        await createRegistration(data);
+        // Optionally, refresh the registrations list after successful submission
+        const updatedRegistrations = await getRegistrations();
+        setRegistrations(updatedRegistrations);
+    } catch (error) {
+        console.error('Failed to create registration:', error);
+    }
+  };
+
+  return (
+    <div>
+      {/* Display registrations */}
+    </div>
+  );
+}
+```
+```javascript
+//MUST NOT: Avoid deeply nested components
+//Explanation: Deeply nested components are hard to read and maintain.
+//Bad example
+function GrandParentComponent() {
+    return (
+        <div>
+            <ParentComponent>
+                <ChildComponent>
+                    <GrandChildComponent>
+                        Hello World!
+                    </GrandChildComponent>
+                </ChildComponent>
+            </ParentComponent>
+        </div>
+    );
+}
+
+//Good example
+function GrandParentComponent() {
+    return (
+        <div>
+            <ParentComponent />
+        </div>
+    );
+}
+
+function ParentComponent() {
+    return (
+        <div>
+            <ChildComponent />
+        </div>
+    );
+}
+
+function ChildComponent() {
+    return (
+        <div>
+            <GrandChildComponent />
+        </div>
+    );
+}
+
+function GrandChildComponent() {
+    return (
+        <div>
+            Hello World!
+        </div>
+    );
+}
+```
+These guidelines are designed to ensure a consistent, maintainable, and high-quality codebase for the "Prove You’re Street Smart" landing page. Adherence to these standards will facilitate collaboration, reduce errors, and improve the overall development process.
+```

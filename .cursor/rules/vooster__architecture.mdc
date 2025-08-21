@@ -1,0 +1,159 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Technical Requirements Document (TRD)
+
+## 1. Executive Technical Summary
+
+- **Project Overview**: "Prove You’re Street Smart" 이벤트 참가자 모집을 위한 반응형 랜딩페이지 개발. Next.js, Supabase, TailwindCSS를 사용하여 빠르고, 확장 가능하며, 시각적으로 매력적인 페이지를 구축한다.
+- **Core Technology Stack**: Next.js (프론트엔드 프레임워크), Supabase (백엔드 서비스), TailwindCSS (CSS 프레임워크)
+- **Key Technical Objectives**: 높은 성능 (Lighthouse Performance ≥ 90), 접근성 (Lighthouse Accessibility ≥ 90), 보안 (HTTPS, reCAPTCHA v2), 높은 전환율 (≥ 15%), 빠른 페이지 로딩 속도 (LCP 1초 이내)
+- **Critical Technical Assumptions**: Netlify 또는 Vercel을 통한 정적 호스팅, 안정적인 Supabase 서비스, GA4 설정 완료.
+
+## 2. Tech Stack
+
+| Category          | Technology / Library        | Reasoning (Why it's chosen for this project) |
+| ----------------- | --------------------------- | -------------------------------------------- |
+| Framework         | Next.js                     | 서버 사이드 렌더링 (SSR) 및 정적 사이트 생성 (SSG) 지원, 빠른 초기 로딩 속도, SEO 최적화 |
+| Backend            | Supabase                    | BaaS (Backend as a Service)로, 데이터베이스, 인증, 실시간 기능 제공, 빠른 개발 속도, 비용 효율성 |
+| Styling            | TailwindCSS                 | 유틸리티 우선 CSS 프레임워크, 빠른 스타일링, 반응형 디자인 용이, 유지보수성 향상 |
+| Form Handling      | React Hook Form             | 폼 상태 관리 및 유효성 검사 간소화, 사용자 경험 향상 |
+| HTTP Client        | Axios / Fetch API          | API 요청 및 응답 처리 |
+| Analytics          | Google Analytics 4 (GA4)    | 페이지뷰, 전환 추적, 사용자 행동 분석 |
+| Security           | reCAPTCHA v2                | 폼 제출 스팸 방지 |
+| UI Components      | 자체 개발 또는 Headless UI Components | 프로젝트 디자인 요구 사항에 맞는 UI 컴포넌트 구현 |
+| State Management   | Context API / Zustand       | 전역 상태 관리 (필요한 경우) |
+
+## 3. System Architecture Design
+
+### Top-Level building blocks
+
+- **Frontend (Next.js)**:
+    - 사용자 인터페이스 (UI) 렌더링 및 사용자 상호 작용 처리
+    - 컴포넌트 기반 아키텍처 (React)
+    - 서버 사이드 렌더링 (SSR) 및 정적 사이트 생성 (SSG)
+    - 서브 블록:
+        - 페이지 컴포넌트 (Hero Section, Concept Highlight, Prize & Networking 등)
+        - UI 컴포넌트 (버튼, 폼, 인포그래픽)
+        - API 클라이언트 (Supabase API 호출)
+- **Backend (Supabase)**:
+    - 데이터베이스 (PostgreSQL)
+    - 인증 (사용자 관리)
+    - API 엔드포인트
+    - 서브 블록:
+        - 데이터베이스 스키마 (이메일, 전화번호 저장)
+        - 인증 규칙 (보안)
+        - API 함수 (데이터 저장, 조회)
+- **Analytics (GA4)**:
+    - 사용자 행동 추적 및 분석
+    - 전환율 측정
+    - 서브 블록:
+        - GA4 스크립트 (페이지에 삽입)
+        - 이벤트 추적 (폼 제출, 버튼 클릭)
+
+### Top-Level Component Interaction Diagram
+
+```mermaid
+graph TD
+    A[사용자] --> B(Next.js Frontend)
+    B --> C{Supabase API}
+    C --> D[Supabase Database]
+    B --> E(Google Analytics 4)
+```
+
+- 사용자는 Next.js 프론트엔드와 상호 작용한다.
+- Next.js 프론트엔드는 Supabase API를 통해 데이터를 저장하고 조회한다.
+- Supabase API는 Supabase 데이터베이스와 통신한다.
+- Next.js 프론트엔드는 Google Analytics 4에 사용자 행동 데이터를 전송한다.
+
+### Code Organization & Convention
+
+**Domain-Driven Organization Strategy**
+
+- **Domain Separation**: 랜딩 페이지의 섹션별로 컴포넌트 분리 (Hero, Concept, Prize, Form 등)
+- **Layer-Based Architecture**: UI 컴포넌트, API 호출, 데이터 처리 로직 분리
+- **Feature-Based Modules**: 각 섹션별로 관련된 컴포넌트, 스타일, 로직을 하나의 폴더에 그룹화
+- **Shared Components**: 재사용 가능한 UI 컴포넌트 (버튼, 폼 입력 필드)
+
+**Universal File & Folder Structure**
+
+```
+/
+├── components/             # React 컴포넌트
+│   ├── Hero.js           # Hero 섹션 컴포넌트
+│   ├── Concept.js        # Concept 섹션 컴포넌트
+│   ├── Prize.js          # 상금 섹션 컴포넌트
+│   ├── Form.js           # 신청 폼 컴포넌트
+│   ├── Button.js         # 재사용 가능한 버튼 컴포넌트
+│   └── ...
+├── pages/                  # Next.js 페이지
+│   └── index.js          # 랜딩 페이지
+├── styles/                 # CSS 스타일
+│   ├── globals.css       # 전역 스타일
+│   └── tailwind.config.js  # TailwindCSS 설정
+├── utils/                  # 유틸리티 함수
+│   └── api.js            # Supabase API 클라이언트
+└── public/                 # 정적 파일 (이미지, 폰트)
+    └── images/
+        └── ...
+```
+
+### Data Flow & Communication Patterns
+
+- **Client-Server Communication**: API 요청/응답 패턴 (Next.js Frontend <-> Supabase API)
+- **Database Interaction**: Supabase API를 통해 데이터베이스에 접근 (PostgreSQL)
+- **External Service Integration**: Google Analytics 4 스크립트 삽입
+- **Data Synchronization**: 실시간 데이터 동기화는 필요 없음
+
+## 4. Performance & Optimization Strategy
+
+- 이미지 최적화: 웹P 포맷 사용, 이미지 크기 최적화, Lazy Loading 적용
+- 코드 분할: Next.js의 코드 분할 기능을 사용하여 초기 로딩 속도 향상
+- 캐싱: 정적 자산 캐싱 활용
+- CDN 사용: 이미지 및 정적 자산 CDN 배포
+
+## 5. Implementation Roadmap & Milestones
+
+### Phase 1: Foundation (MVP Implementation)
+
+- **Core Infrastructure**: Next.js 프로젝트 설정, Supabase 연동, TailwindCSS 설정
+- **Essential Features**: Hero 섹션, 컨셉 섹션, 신청 폼 구현, 데이터베이스 연동
+- **Basic Security**: HTTPS 설정, reCAPTCHA v2 적용
+- **Development Setup**: 개발 환경 설정, Git 저장소 생성
+- **Timeline**: D+6 – D+8
+
+### Phase 2: Feature Enhancement
+
+- **Advanced Features**: 상금 섹션, FAQ 섹션, 소셜 공유 기능 구현, GA4 연동
+- **Performance Optimization**: 이미지 최적화, 코드 분할, 캐싱
+- **Enhanced Security**: 폼 유효성 검사 강화
+- **Monitoring Implementation**: GA4 이벤트 추적 설정
+- **Timeline**: D+9 – D+12
+
+## 6. Risk Assessment & Mitigation Strategies
+
+### Technical Risk Analysis
+
+- **Technology Risks**: Supabase 서비스 장애 가능성
+- **Performance Risks**: 페이지 로딩 속도 저하 가능성
+- **Security Risks**: 스팸 제출, 데이터 유출 가능성
+- **Mitigation Strategies**:
+    - Supabase 서비스 장애 대비: 대체 백엔드 서비스 고려
+    - 페이지 로딩 속도 저하 대비: 성능 모니터링, 코드 최적화
+    - 스팸 제출 대비: reCAPTCHA 강화, 전화번호 형식 검증
+    - 데이터 유출 대비: 데이터베이스 보안 강화
+
+### Project Delivery Risks
+
+- **Timeline Risks**: 개발 지연 가능성
+- **Resource Risks**: 개발 인력 부족 가능성
+- **Quality Risks**: 코드 품질 저하 가능성
+- **Deployment Risks**: 배포 실패 가능성
+- **Contingency Plans**:
+    - 개발 지연 대비: 우선순위 조정, 추가 인력 투입
+    - 개발 인력 부족 대비: 외부 개발자 활용
+    - 코드 품질 저하 대비: 코드 리뷰, 자동화 테스트
+    - 배포 실패 대비: 배포 전 테스트, 롤백 전략
+
