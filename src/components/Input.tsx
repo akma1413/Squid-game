@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 interface InputProps {
   label: string;
@@ -9,7 +10,7 @@ interface InputProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
-  register: any; // react-hook-form register
+  register: UseFormRegister<any>; // Use UseFormRegister type
   className?: string;
 }
 

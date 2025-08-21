@@ -39,8 +39,8 @@ export default function ApplicationForm() {
       console.log('Form data:', data);
       setSubmitSuccess(true);
       reset();
-    } catch (error) {
-      setSubmitError('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } catch (error: unknown) {
+      setSubmitError(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }
