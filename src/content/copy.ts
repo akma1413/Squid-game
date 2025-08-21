@@ -1,6 +1,6 @@
 export const COPY = {
   hero: {
-    headline: "확인해보세요. 나의 경쟁력",
+    headline: "당신만의 방식으로, 생존하세요",
     sub: "100명의 참여자. 5번의 게임. 1명의 우승자.",
     slogan: "Prove You're Street Cat",
     ctaPrimary: "지금 지원하기",

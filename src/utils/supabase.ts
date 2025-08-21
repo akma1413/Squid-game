@@ -1,9 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// 환경 변수가 있을 때만 Supabase 클라이언트 생성
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // 지원자 데이터 타입
 export interface ApplicationData {
@@ -14,6 +17,10 @@ export interface ApplicationData {
 
 // 지원자 데이터 저장 함수
 export async function submitApplication(data: ApplicationData) {
+  if (!supabase) {
+    return { success: false, error: 'Supabase 클라이언트가 초기화되지 않았습니다.' };
+  }
+
   try {
     const { data: result, error } = await supabase
       .from('applications')
@@ -34,6 +41,10 @@ export async function submitApplication(data: ApplicationData) {
 
 // 모든 지원자 데이터 조회 함수 (관리자용)
 export async function getAllApplications() {
+  if (!supabase) {
+    return { success: false, error: 'Supabase 클라이언트가 초기화되지 않았습니다.' };
+  }
+
   try {
     const { data, error } = await supabase
       .from('applications')
@@ -53,6 +64,10 @@ export async function getAllApplications() {
 
 // 지원자 상태 업데이트 함수 (관리자용)
 export async function updateApplicationStatus(id: number, status: 'pending' | 'approved' | 'rejected') {
+  if (!supabase) {
+    return { success: false, error: 'Supabase 클라이언트가 초기화되지 않았습니다.' };
+  }
+
   try {
     const { data, error } = await supabase
       .from('applications')

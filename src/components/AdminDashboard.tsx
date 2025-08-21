@@ -29,7 +29,7 @@ export default function AdminDashboard() {
       } else {
         setError('지원자 데이터를 불러오는데 실패했습니다.');
       }
-    } catch (err) {
+    } catch {
       setError('오류가 발생했습니다.');
     } finally {
       setLoading(false);
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
       } else {
         alert('상태 업데이트에 실패했습니다.');
       }
-    } catch (err) {
+    } catch {
       alert('오류가 발생했습니다.');
     }
   };
