@@ -28,16 +28,17 @@ export default function Why() {
                   </span>
                 </div>
                 
-                {/* 텍스트 내용 */}
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-4 leading-relaxed">
-                  {item}
-                </h3>
+                {/* 텍스트 내용 - dangerouslySetInnerHTML 사용하여 줄바꿈 적용 */}
+                <h3 
+                  className="text-xl md:text-2xl font-bold text-white mb-4 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: item }}
+                />
                 
                 {/* 추가 설명 (선택사항) */}
                 <p className="text-neutral-400 text-sm md:text-base">
-                  {index === 0 && "실제 경험을 바탕으로 한 전략과 노하우"}
-                  {index === 1 && "엘리트 교육과 업계 경험을 겸비한 참가자"}
-                  {index === 2 && "게임에 대한 깊은 이해와 열정을 가진 참가자"}
+                  {index === 0 && "덱스를 이긴 남자와의 경쟁"}
+                  {index === 1 && "자타공인 브레인 모집"}
+                  {index === 2 && "보드게임 경력직 환영"}
                 </p>
               </div>
             </div>

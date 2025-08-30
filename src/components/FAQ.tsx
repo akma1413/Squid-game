@@ -17,7 +17,10 @@ export default function FAQ() {
           {COPY.faq.map((item, index) => (
             <div key={index} className="bg-[#1A1A1A] p-6 rounded-lg border border-[#D6B25E]/20">
               <h3 className="text-white font-bold mb-3">{item.q}</h3>
-              <p className="text-neutral-300">{item.a}</p>
+              <p 
+                className="text-neutral-300"
+                dangerouslySetInnerHTML={{ __html: item.a }}
+              />
             </div>
           ))}
         </div>

@@ -14,9 +14,11 @@ export default function Prize() {
           </h2>
           <div className="space-y-4 max-w-4xl mx-auto">
             {COPY.prize.lines.map((line, index) => (
-              <p key={index} className="text-lg md:text-xl text-neutral-300">
-                {line}
-              </p>
+              <p 
+                key={index} 
+                className="text-lg md:text-xl text-neutral-300"
+                dangerouslySetInnerHTML={{ __html: line }}
+              />
             ))}
           </div>
         </div>
