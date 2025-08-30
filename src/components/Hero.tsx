@@ -26,7 +26,7 @@ export default function Hero() {
         {/* 통계 배지 제거 */}
         
         {/* CTA Buttons */}
-        <div className="mt-8 flex gap-3 justify-center items-center flex-col sm:flex-row">
+        <div className="mt-8 flex gap-3 justify-center items-start flex-col sm:flex-row">
           <Button 
             variant="primary" 
             size="lg"
@@ -35,14 +35,17 @@ export default function Hero() {
           >
             {COPY.hero.ctaPrimary}
           </Button>
-          <Button 
-            variant="outline" 
-            size="lg"
-            onClick={() => document.getElementById('rules')?.scrollIntoView({ behavior: 'smooth' })}
-            aria-label="{COPY.hero.ctaSecondary} 버튼"
-          >
-            {COPY.hero.ctaSecondary}
-          </Button>
+          <div className="flex flex-col items-center">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => document.getElementById('rules')?.scrollIntoView({ behavior: 'smooth' })}
+              aria-label="{COPY.hero.ctaSecondary} 버튼"
+            >
+              {COPY.hero.ctaSecondary}
+            </Button>
+            <p className="text-xs text-neutral-400 mt-2">*추후 공개 예정</p>
+          </div>
         </div>
       </div>
     </section>
