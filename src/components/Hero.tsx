@@ -26,7 +26,7 @@ export default function Hero() {
         {/* 통계 배지 제거 */}
         
         {/* CTA Buttons */}
-        <div className="mt-8 flex gap-3 justify-center items-start flex-col sm:flex-row">
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-start">
           <Button 
             variant="primary" 
             size="lg"
